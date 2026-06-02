@@ -27,11 +27,11 @@ using WebShop.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
-// 1. Connect Entity Framework Core to the SQL Server LocalDB database.
+// 1. Connect Entity Framework Core to a local SQLite database file.
 //    The connection string "DefaultConnection" is defined in appsettings.json.
 //    EF Core uses ApplicationDbContext to know which tables exist.
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
-    options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
+    options.UseSqlite(builder.Configuration.GetConnectionString("DefaultConnection")));
 
 // 2. Set up ASP.NET Core Identity (user accounts, passwords, login/logout).
 //    - AddDefaultIdentity<IdentityUser>() registers the default user type.
@@ -62,6 +62,12 @@ builder.Services.AddScoped<IShopService, ShopService>();
 // ---------------------------------------------------------------------------
 
 var app = builder.Build();
+
+using (var scope = app.Services.CreateScope())
+{
+    var dbContext = scope.ServiceProvider.GetRequiredService<ApplicationDbContext>();
+    await dbContext.Database.EnsureCreatedAsync();
+}
 
 // Seed basic roles and one admin user for development.
 await app.SeedRolesAndAdminAsync();
