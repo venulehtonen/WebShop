@@ -13,30 +13,28 @@
 @inject SignInManager<IdentityUser> SignInManager
 @inject UserManager<IdentityUser> UserManager
 
-<ul class="navbar-nav">
+<ul class="flex items-center gap-2">
 @if (SignInManager.IsSignedIn(User))
 {
-    @* Logged-in: show the user's email and a Logout button *@
-    <li class="nav-item">
-        <a class="nav-link text-white" asp-area="Identity" asp-page="/Account/Manage/Index">
+    <li>
+        <a class="rounded-xl px-3 py-2 text-white/80 transition hover:bg-white/10 hover:text-white" asp-area="Identity" asp-page="/Account/Manage/Index">
             Hello, @UserManager.GetUserName(User)!
         </a>
     </li>
-    <li class="nav-item">
-        <form class="form-inline" asp-area="Identity" asp-page="/Account/Logout"
+    <li>
+        <form asp-area="Identity" asp-page="/Account/Logout"
               asp-route-returnUrl="@Url.Page("/Index", new { area = "" })" method="post">
-            <button type="submit" class="nav-link btn btn-link text-white">Logout</button>
+            <button type="submit" class="rounded-xl bg-gradient-to-r from-violet-600 to-fuchsia-600 px-3 py-2 text-white transition hover:from-violet-500 hover:to-fuchsia-500">Logout</button>
         </form>
     </li>
 }
 else
 {
-    @* Not logged in: show Register and Login links *@
-    <li class="nav-item">
-        <a class="nav-link text-white" asp-area="Identity" asp-page="/Account/Register">Register</a>
+    <li>
+        <a class="rounded-xl px-3 py-2 text-white/80 transition hover:bg-white/10 hover:text-white" asp-area="Identity" asp-page="/Account/Register">Register</a>
     </li>
-    <li class="nav-item">
-        <a class="nav-link text-white" asp-area="Identity" asp-page="/Account/Login">Login</a>
+    <li>
+        <a class="rounded-xl bg-gradient-to-r from-violet-600 to-fuchsia-600 px-3 py-2 text-white transition hover:from-violet-500 hover:to-fuchsia-500" asp-area="Identity" asp-page="/Account/Login">Login</a>
     </li>
 }
 </ul>

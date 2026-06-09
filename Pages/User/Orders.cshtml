@@ -4,54 +4,54 @@
     ViewData["Title"] = "My Orders";
 }
 
-<h1 class="mb-3">My Orders</h1>
+<h1 class="mb-5 text-3xl font-bold tracking-tight text-white">My Orders</h1>
 
 @if (!string.IsNullOrWhiteSpace(Model.StatusMessage))
 {
-    <div class="alert alert-info">@Model.StatusMessage</div>
+    <div class="mb-4 rounded-2xl border border-emerald-500/30 bg-emerald-500/10 px-4 py-3 text-emerald-300">@Model.StatusMessage</div>
 }
 
-<div class="card mb-4">
-    <div class="card-header">Current Cart</div>
-    <div class="card-body">
+<div class="mb-6 rounded-3xl border border-violet-500/20 bg-white/5 shadow-sm backdrop-blur">
+    <div class="border-b border-white/10 px-5 py-4 text-lg font-semibold text-white">Current Cart</div>
+    <div class="p-5">
         @if (Model.CartItems.Count == 0)
         {
-            <p class="mb-0">Your cart is empty.</p>
+            <p class="rounded-2xl border border-white/10 bg-white/5 px-4 py-3 text-white/70">Your cart is empty.</p>
         }
         else
         {
-            <div class="table-responsive mb-3">
-                <table class="table table-sm align-middle mb-0">
+            <div class="overflow-x-auto">
+                <table class="min-w-full divide-y divide-white/10 text-sm text-white/85">
                     <thead>
-                        <tr>
-                            <th>Product</th>
-                            <th class="text-end">Unit</th>
-                            <th class="text-center">Qty</th>
-                            <th class="text-end">Total</th>
-                            <th class="text-end">Actions</th>
+                        <tr class="text-left text-white/60">
+                            <th class="px-3 py-2">Product</th>
+                            <th class="px-3 py-2 text-right">Unit</th>
+                            <th class="px-3 py-2 text-center">Qty</th>
+                            <th class="px-3 py-2 text-right">Total</th>
+                            <th class="px-3 py-2 text-right">Actions</th>
                         </tr>
                     </thead>
-                    <tbody>
+                    <tbody class="divide-y divide-white/10">
                         @foreach (var item in Model.CartItems)
                         {
                             <tr>
-                                <td>@item.Name</td>
-                                <td class="text-end">@item.UnitPrice.ToString("0.00") kr</td>
-                                <td class="text-center">@item.Quantity</td>
-                                <td class="text-end">@item.LineTotal.ToString("0.00") kr</td>
-                                <td class="text-end">
-                                    <div class="btn-group btn-group-sm">
-                                        <form method="post" asp-page-handler="DecreaseCartItem" class="d-inline">
+                                <td class="px-3 py-2">@item.Name</td>
+                                <td class="px-3 py-2 text-right">@item.UnitPrice.ToString("0.00") kr</td>
+                                <td class="px-3 py-2 text-center">@item.Quantity</td>
+                                <td class="px-3 py-2 text-right">@item.LineTotal.ToString("0.00") kr</td>
+                                <td class="px-3 py-2 text-right">
+                                    <div class="inline-flex items-center gap-1">
+                                        <form method="post" asp-page-handler="DecreaseCartItem" class="inline">
                                             <input type="hidden" name="cartItemId" value="@item.CartItemId" />
-                                            <button type="submit" class="btn btn-outline-secondary">-</button>
+                                            <button type="submit" class="rounded-xl border border-white/20 bg-white/5 px-2 py-1 hover:bg-white/10">-</button>
                                         </form>
-                                        <form method="post" asp-page-handler="IncreaseCartItem" class="d-inline">
+                                        <form method="post" asp-page-handler="IncreaseCartItem" class="inline">
                                             <input type="hidden" name="cartItemId" value="@item.CartItemId" />
-                                            <button type="submit" class="btn btn-outline-secondary">+</button>
+                                            <button type="submit" class="rounded-xl border border-white/20 bg-white/5 px-2 py-1 hover:bg-white/10">+</button>
                                         </form>
-                                        <form method="post" asp-page-handler="RemoveCartItem" class="d-inline">
+                                        <form method="post" asp-page-handler="RemoveCartItem" class="inline">
                                             <input type="hidden" name="cartItemId" value="@item.CartItemId" />
-                                            <button type="submit" class="btn btn-outline-danger">Remove</button>
+                                            <button type="submit" class="rounded-xl border border-rose-500/35 bg-rose-500/10 px-2 py-1 text-rose-300 hover:bg-rose-500/20">Remove</button>
                                         </form>
                                     </div>
                                 </td>
@@ -61,39 +61,39 @@
                 </table>
             </div>
 
-            <div class="mb-3 text-end">
-                <strong>
+            <div class="mb-4 mt-4 text-right">
+                <strong class="text-violet-200">
                     Cart total:
                     @Model.CartItems.Sum(i => i.LineTotal).ToString("0.00") kr
                 </strong>
             </div>
 
             <form method="post" asp-page-handler="CreateOrder">
-                <button type="submit" class="btn btn-primary">Create Order</button>
+                <button type="submit" class="rounded-full bg-gradient-to-r from-violet-600 to-fuchsia-600 px-4 py-2.5 font-semibold text-white transition hover:from-violet-500 hover:to-fuchsia-500">Create Order</button>
             </form>
         }
     </div>
 </div>
 
-<div class="card">
-    <div class="card-header">Order History</div>
-    <div class="card-body">
+<div class="rounded-3xl border border-violet-500/20 bg-white/5 shadow-sm backdrop-blur">
+    <div class="border-b border-white/10 px-5 py-4 text-lg font-semibold text-white">Order History</div>
+    <div class="p-5">
         @if (Model.Orders.Count == 0)
         {
-            <p class="mb-0">No orders yet.</p>
+            <p class="rounded-2xl border border-white/10 bg-white/5 px-4 py-3 text-white/70">No orders yet.</p>
         }
         else
         {
             @foreach (var order in Model.Orders)
             {
-                <div class="border rounded p-3 mb-3">
-                    <div class="d-flex justify-content-between mb-2">
+                <div class="mb-3 rounded-2xl border border-white/10 bg-white/5 p-4">
+                    <div class="mb-2 flex items-center justify-between">
                         <strong>Order #@order.Id</strong>
-                        <span>@order.CreatedAtUtc.ToLocalTime().ToString("yyyy-MM-dd HH:mm")</span>
+                        <span class="text-sm text-white/60">@order.CreatedAtUtc.ToLocalTime().ToString("yyyy-MM-dd HH:mm")</span>
                     </div>
-                    <div class="mb-1">Status: <strong>@order.Status</strong></div>
-                    <div class="mb-2">Total: <strong>@order.TotalAmount.ToString("0.00") kr</strong></div>
-                    <ul class="mb-0">
+                    <div class="mb-1">Status: <strong class="text-emerald-300">@order.Status</strong></div>
+                    <div class="mb-2">Total: <strong class="text-violet-200">@order.TotalAmount.ToString("0.00") kr</strong></div>
+                    <ul class="list-disc pl-6">
                         @foreach (var item in order.Items)
                         {
                             <li>@item.ProductName x @item.Quantity - @item.LineTotal.ToString("0.00") kr</li>

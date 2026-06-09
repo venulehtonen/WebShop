@@ -1,0 +1,93 @@
+@page
+@model WebShop.Pages.Admin.ProductsModel
+@{
+    ViewData["Title"] = "Admin Products";
+}
+
+<h1 class="mb-5 text-3xl font-bold tracking-tight text-white">Admin Products</h1>
+
+@if (!string.IsNullOrWhiteSpace(Model.StatusMessage))
+{
+    <div class="mb-4 rounded-2xl border border-emerald-500/30 bg-emerald-500/10 px-4 py-3 text-emerald-300">@Model.StatusMessage</div>
+}
+
+<div class="mb-6 rounded-3xl border border-violet-500/20 bg-white/5 p-5 shadow-sm backdrop-blur">
+    <h2 class="mb-3 text-xl font-semibold text-white">@(Model.EditId > 0 ? "Edit Product" : "Create Product")</h2>
+
+    <form method="post" asp-page-handler="@(Model.EditId > 0 ? "Update" : "Create")" class="grid grid-cols-1 gap-3 md:grid-cols-2">
+        <input type="hidden" asp-for="EditId" />
+
+        <div>
+            <label asp-for="Input.Name" class="mb-1 block text-sm font-medium text-white/70">Name</label>
+            <input asp-for="Input.Name" class="w-full rounded-2xl border border-white/20 bg-white/5 px-3 py-2 text-white" />
+        </div>
+
+        <div>
+            <label asp-for="Input.Price" class="mb-1 block text-sm font-medium text-white/70">Price</label>
+            <input asp-for="Input.Price" class="w-full rounded-2xl border border-white/20 bg-white/5 px-3 py-2 text-white" />
+        </div>
+
+        <div class="md:col-span-2">
+            <label asp-for="Input.Description" class="mb-1 block text-sm font-medium text-white/70">Description</label>
+            <textarea asp-for="Input.Description" rows="3" class="w-full rounded-2xl border border-white/20 bg-white/5 px-3 py-2 text-white"></textarea>
+        </div>
+
+        <div class="md:col-span-2 flex gap-2">
+            <button type="submit" class="rounded-full bg-gradient-to-r from-violet-600 to-fuchsia-600 px-4 py-2.5 font-semibold text-white transition hover:from-violet-500 hover:to-fuchsia-500">
+                @(Model.EditId > 0 ? "Save changes" : "Create product")
+            </button>
+            @if (Model.EditId > 0)
+            {
+                <a asp-page="/Admin/Products" class="rounded-full border border-white/20 bg-white/5 px-4 py-2.5 text-white/85 hover:bg-white/10">Cancel</a>
+            }
+        </div>
+    </form>
+</div>
+
+<div class="rounded-3xl border border-violet-500/20 bg-white/5 p-5 shadow-sm backdrop-blur">
+    <h2 class="mb-3 text-xl font-semibold text-white">All Products</h2>
+
+    @if (Model.Products.Count == 0)
+    {
+        <p class="rounded-2xl border border-white/10 bg-white/5 px-4 py-3 text-white/70">No products found.</p>
+    }
+    else
+    {
+        <div class="overflow-x-auto">
+            <table class="min-w-full divide-y divide-white/10 text-sm text-white/85">
+                <thead>
+                    <tr class="text-left text-white/60">
+                        <th class="px-3 py-2">Id</th>
+                        <th class="px-3 py-2">Name</th>
+                        <th class="px-3 py-2">Price</th>
+                        <th class="px-3 py-2">Description</th>
+                        <th class="px-3 py-2 text-right">Actions</th>
+                    </tr>
+                </thead>
+                <tbody class="divide-y divide-white/10">
+                    @foreach (var product in Model.Products)
+                    {
+                        <tr>
+                            <td class="px-3 py-2">@product.Id</td>
+                            <td class="px-3 py-2">@product.Name</td>
+                            <td class="px-3 py-2">@product.Price.ToString("0.00") kr</td>
+                            <td class="px-3 py-2">@product.Description</td>
+                            <td class="px-3 py-2 text-right">
+                                <div class="inline-flex gap-2">
+                                    <form method="post" asp-page-handler="StartEdit">
+                                        <input type="hidden" name="productId" value="@product.Id" />
+                                        <button type="submit" class="rounded-xl border border-white/20 bg-white/5 px-3 py-1 hover:bg-white/10">Edit</button>
+                                    </form>
+                                    <form method="post" asp-page-handler="Delete" onsubmit="return confirm('Delete this product?');">
+                                        <input type="hidden" name="productId" value="@product.Id" />
+                                        <button type="submit" class="rounded-xl border border-rose-500/35 bg-rose-500/10 px-3 py-1 text-rose-300 hover:bg-rose-500/20">Delete</button>
+                                    </form>
+                                </div>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    }
+</div>

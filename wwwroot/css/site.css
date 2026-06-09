@@ -1,5 +1,7 @@
 html {
   font-size: 14px;
+  position: relative;
+  min-height: 100%;
 }
 
 @media (min-width: 768px) {
@@ -8,15 +10,187 @@ html {
   }
 }
 
-.btn:focus, .btn:active:focus, .btn-link.nav-link:focus, .form-control:focus, .form-check-input:focus {
-  box-shadow: 0 0 0 0.1rem white, 0 0 0 0.25rem #258cfb;
-}
-
-html {
-  position: relative;
-  min-height: 100%;
-}
-
 body {
   margin-bottom: 60px;
+}
+
+.btn:focus,
+.btn:active:focus,
+.btn-link.nav-link:focus,
+.form-control:focus,
+.form-check-input:focus {
+  box-shadow: 0 0 0 0.2rem rgba(139, 92, 246, 0.35) !important;
+}
+
+/* Identity pages and bootstrap forms: dark glass look */
+.card,
+.border,
+.bg-white {
+  border-color: rgba(255, 255, 255, 0.14) !important;
+}
+
+.card,
+.table,
+.alert,
+.list-group,
+.list-group-item {
+  background: rgba(255, 255, 255, 0.05) !important;
+  color: rgba(255, 255, 255, 0.9) !important;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+label,
+.text-dark,
+.text-muted,
+.col-md-3 a,
+.col-md-9,
+.nav-link,
+p,
+li,
+dt,
+dd {
+  color: rgba(255, 255, 255, 0.92) !important;
+}
+
+.form-control,
+.form-select,
+input,
+textarea {
+  border: 1px solid rgba(255, 255, 255, 0.16) !important;
+  background: rgba(255, 255, 255, 0.07) !important;
+  color: #fff !important;
+  border-radius: 14px !important;
+}
+
+::placeholder {
+  color: rgba(255, 255, 255, 0.55) !important;
+}
+
+.btn-primary,
+.btn.btn-primary,
+button.btn-primary {
+  border: 0 !important;
+  border-radius: 999px !important;
+  background: linear-gradient(90deg, #7c3aed, #d946ef) !important;
+  color: #fff !important;
+  font-weight: 700 !important;
+}
+
+.btn-primary:hover,
+.btn.btn-primary:hover,
+button.btn-primary:hover {
+  filter: brightness(1.08);
+}
+
+.nav-pills .nav-link.active,
+.nav-pills .show > .nav-link {
+  border-radius: 14px !important;
+  background: linear-gradient(90deg, #7c3aed, #d946ef) !important;
+  color: #fff !important;
+}
+
+/* Identity login page polish */
+#socialLoginForm {
+  display: none !important;
+}
+
+#account {
+  margin-top: 0.75rem;
+  padding: 1.25rem;
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  border-radius: 1.2rem;
+  background: linear-gradient(145deg, rgba(124, 58, 237, 0.15), rgba(217, 70, 239, 0.08));
+  box-shadow: 0 16px 40px rgba(0, 0, 0, 0.3);
+}
+
+#account .form-floating {
+  margin-bottom: 0.9rem !important;
+}
+
+body[data-path^="/Identity/Account/Login"] #account .form-floating > label {
+  display: none !important;
+}
+
+body[data-path^="/Identity/Account/Login"] #account .form-floating > .form-control,
+body[data-path^="/Identity/Account/Login"] #account .form-floating > .form-control-plaintext {
+  padding-top: 0.85rem !important;
+  padding-bottom: 0.85rem !important;
+  height: auto !important;
+}
+#account .form-control {
+  height: 3.35rem;
+}
+
+#account .btn-primary {
+  width: 100%;
+  margin-top: 0.35rem;
+  padding: 0.85rem 1rem;
+  font-size: 1.45rem;
+  line-height: 1;
+}
+
+#account + div,
+.row .col-md-4 section > p,
+.row .col-md-4 section > h2 {
+  color: rgba(255, 255, 255, 0.92) !important;
+}
+
+.row .col-md-4 {
+  max-width: 520px;
+}
+
+/* Login route only: clean centered auth screen */
+body[data-path^="/Identity/Account/Login"] header,
+body[data-path^="/Identity/Account/Login"] footer {
+  display: none !important;
+}
+
+body[data-path^="/Identity/Account/Login"] #app-main {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+body[data-path^="/Identity/Account/Login"] .row {
+  display: flex;
+  justify-content: center;
+}
+
+body[data-path^="/Identity/Account/Login"] .row > div:first-child {
+  width: 100%;
+  max-width: 520px;
+}
+
+body[data-path^="/Identity/Account/Login"] .row > div:nth-child(2),
+body[data-path^="/Identity/Account/Login"] #socialLoginForm,
+body[data-path^="/Identity/Account/Login"] h3,
+body[data-path^="/Identity/Account/Login"] h3 + hr,
+body[data-path^="/Identity/Account/Login"] h3 + hr + div {
+  display: none !important;
+}
+
+body[data-path^="/Identity/Account/Login"] h1,
+body[data-path^="/Identity/Account/Login"] #account h2,
+body[data-path^="/Identity/Account/Login"] #account hr,
+body[data-path^="/Identity/Account/Login"] #account p {
+  display: none !important;
+}
+
+body[data-path^="/Identity/Account/Login"] #account {
+  margin-top: 0;
+}
+
+body[data-path^="/Identity/Account/Login"] #account::after {
+  content: "Forgot password?";
+  display: block;
+  margin-top: 0.65rem;
+  color: rgba(255, 255, 255, 0.78);
+  font-size: 0.98rem;
+  font-weight: 500;
 }

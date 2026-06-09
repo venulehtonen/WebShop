@@ -1,82 +1,64 @@
-@* ============================================================================
-   Pages/Index.cshtml — The Home page
-   ============================================================================
-
-   Routing: This file maps to the root URL "/"
-   How?     Razor Pages uses the file path relative to the Pages folder:
-              Pages/Index.cshtml        →  /
-              Pages/Products/List.cshtml →  /Products/List
-
-   @page  — marks this file as a Razor Page (required on every page)
-   @model — connects this view to its PageModel (Index.cshtml.cs)
-   ============================================================================
-*@
 @page
 @model IndexModel
 @{
     ViewData["Title"] = "Home";
 }
 
-@* Hero / welcome section *@
-<div class="px-4 py-5 my-3 text-center">
-    <h1 class="display-4 fw-bold">Welcome to WebShop</h1>
-    <p class="lead text-muted">
-        A simple beginner-friendly ASP.NET Core webshop built with Razor Pages,
-        Entity Framework Core and ASP.NET Identity.
-    </p>
+<section class="relative mb-8 overflow-hidden rounded-[2rem] border border-violet-300/25 bg-gradient-to-br from-violet-700/25 via-indigo-700/20 to-fuchsia-600/15 px-7 py-12 shadow-[0_20px_70px_rgba(76,29,149,0.45)] backdrop-blur-xl md:px-10 md:py-14">
+    <div class="pointer-events-none absolute -right-20 -top-16 h-56 w-56 rounded-full bg-fuchsia-500/25 blur-3xl"></div>
+    <div class="pointer-events-none absolute -bottom-20 left-10 h-56 w-56 rounded-full bg-cyan-400/20 blur-3xl"></div>
 
-    @* Show different content depending on login state *@
-    @if (User.Identity?.IsAuthenticated == true)
-    {
-        <p class="text-success fw-semibold">You are logged in as <strong>@User.Identity.Name</strong>.</p>
-        <a class="btn btn-primary btn-lg" asp-area="Identity" asp-page="/Account/Manage/Index">My Account</a>
-    }
-    else
-    {
-        <div class="d-flex justify-content-center gap-2">
-            <a class="btn btn-primary btn-lg" asp-area="Identity" asp-page="/Account/Register">Get Started</a>
-            <a class="btn btn-outline-secondary btn-lg" asp-area="Identity" asp-page="/Account/Login">Login</a>
-        </div>
-    }
-</div>
+    <div class="relative z-10 max-w-3xl">
+        <span class="inline-flex rounded-full border border-white/20 bg-white/10 px-3 py-1 text-xs font-semibold uppercase tracking-[0.16em] text-white/80">
+            New drop this week
+        </span>
+        <h1 class="mt-4 text-4xl font-extrabold tracking-tight text-white md:text-5xl">Welcome to WebShop</h1>
+        <p class="mt-4 max-w-2xl text-base leading-relaxed text-white/80 md:text-lg">
+            Discover hand-picked tech essentials with clear pricing, smooth ordering,
+            and a modern shopping flow designed to feel premium from first click.
+        </p>
 
-@* Info cards — explain what this project is about *@
-<div class="row row-cols-1 row-cols-md-3 g-4 mt-2">
-    <div class="col">
-        <div class="card h-100 shadow-sm">
-            <div class="card-body">
-                <h5 class="card-title">&#128196; Razor Pages</h5>
-                <p class="card-text">
-                    Each page is a <code>.cshtml</code> file (the view) paired with a
-                    <code>.cshtml.cs</code> file (the PageModel / logic).
-                    Routing is based on the file path — no controllers needed.
-                </p>
+        @if (User.Identity?.IsAuthenticated == true)
+        {
+            <p class="mt-5 font-medium text-emerald-300">Logged in as <strong>@User.Identity.Name</strong></p>
+            <div class="mt-5 flex flex-wrap gap-3">
+                <a class="rounded-full bg-gradient-to-r from-violet-500 to-fuchsia-500 px-6 py-3 font-semibold text-white shadow-lg shadow-violet-900/35 transition hover:-translate-y-0.5 hover:from-violet-400 hover:to-fuchsia-400" asp-area="Identity" asp-page="/Account/Manage/Index">My Account</a>
+                <a class="rounded-full border border-white/25 bg-white/5 px-6 py-3 font-semibold text-white/90 transition hover:bg-white/10" asp-area="" asp-page="/Products/Index">Shop Products</a>
             </div>
-        </div>
-    </div>
-    <div class="col">
-        <div class="card h-100 shadow-sm">
-            <div class="card-body">
-                <h5 class="card-title">&#128202; Entity Framework Core</h5>
-                <p class="card-text">
-                    EF Core maps C# classes to database tables. Run
-                    <code>dotnet ef migrations add &lt;Name&gt;</code> to create a migration,
-                    then <code>dotnet ef database update</code> to apply it.
-                </p>
+        }
+        else
+        {
+            <div class="mt-6 flex flex-wrap gap-3">
+                <a class="rounded-full bg-gradient-to-r from-violet-500 to-fuchsia-500 px-6 py-3 font-semibold text-white shadow-lg shadow-violet-900/35 transition hover:-translate-y-0.5 hover:from-violet-400 hover:to-fuchsia-400" asp-area="Identity" asp-page="/Account/Register">Get Started</a>
+                <a class="rounded-full border border-white/25 bg-white/5 px-6 py-3 font-semibold text-white/90 transition hover:bg-white/10" asp-area="Identity" asp-page="/Account/Login">Login</a>
             </div>
-        </div>
+        }
     </div>
-    <div class="col">
-        <div class="card h-100 shadow-sm">
-            <div class="card-body">
-                <h5 class="card-title">&#128272; ASP.NET Identity</h5>
-                <p class="card-text">
-                    Identity handles user registration, login, logout and password
-                    hashing out of the box. User data is stored in the same SQL Server
-                    LocalDB database as the rest of the app.
-                </p>
-            </div>
-        </div>
-    </div>
-</div>
+</section>
+
+<section class="grid grid-cols-1 gap-5 md:grid-cols-3">
+    <article class="group rounded-3xl border border-white/10 bg-white/5 p-6 shadow-sm backdrop-blur transition hover:-translate-y-1 hover:border-violet-300/40 hover:shadow-[0_12px_40px_rgba(139,92,246,0.2)]">
+        <div class="mb-4 inline-flex h-10 w-10 items-center justify-center rounded-xl bg-gradient-to-br from-violet-500/30 to-fuchsia-500/30 text-lg">⚡</div>
+        <h2 class="text-2xl font-bold text-white">Fast Shopping Flow</h2>
+        <p class="mt-2 text-sm leading-relaxed text-white/70">
+            Browse products, add to cart, and place orders in seconds with a clean and focused user journey.
+        </p>
+    </article>
+
+    <article class="group rounded-3xl border border-white/10 bg-white/5 p-6 shadow-sm backdrop-blur transition hover:-translate-y-1 hover:border-violet-300/40 hover:shadow-[0_12px_40px_rgba(139,92,246,0.2)]">
+        <div class="mb-4 inline-flex h-10 w-10 items-center justify-center rounded-xl bg-gradient-to-br from-violet-500/30 to-fuchsia-500/30 text-lg">🛒</div>
+        <h2 class="text-2xl font-bold text-white">Smart Catalog</h2>
+        <p class="mt-2 text-sm leading-relaxed text-white/70">
+            Product management, pricing and order status updates are all streamlined for quick admin control.
+        </p>
+    </article>
+
+    <article class="group rounded-3xl border border-white/10 bg-white/5 p-6 shadow-sm backdrop-blur transition hover:-translate-y-1 hover:border-violet-300/40 hover:shadow-[0_12px_40px_rgba(139,92,246,0.2)]">
+        <div class="mb-4 inline-flex h-10 w-10 items-center justify-center rounded-xl bg-gradient-to-br from-violet-500/30 to-fuchsia-500/30 text-lg">🔐</div>
+        <h2 class="text-2xl font-bold text-white">Role-Based Access</h2>
+        <p class="mt-2 text-sm leading-relaxed text-white/70">
+            Users shop and order while admins manage products, users and orders through dedicated dashboards.
+        </p>
+    </article>
+</section>
 

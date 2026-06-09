@@ -4,34 +4,35 @@
     ViewData["Title"] = "Products";
 }
 
-<h1 class="mb-3">Products</h1>
+<div class="mb-5">
+    <h1 class="text-3xl font-bold tracking-tight text-white">Products</h1>
+    <p class="mt-1 text-sm text-white/70">Browse the catalog and add products to your cart.</p>
+</div>
 
 @if (!string.IsNullOrWhiteSpace(Model.StatusMessage))
 {
-    <div class="alert alert-info">@Model.StatusMessage</div>
+    <div class="mb-4 rounded-2xl border border-emerald-500/30 bg-emerald-500/10 px-4 py-3 text-emerald-300">@Model.StatusMessage</div>
 }
 
 @if (Model.Products.Count == 0)
 {
-    <p>No products found.</p>
+    <p class="rounded-2xl border border-white/10 bg-white/5 px-4 py-3 text-white/80">No products found.</p>
 }
 else
 {
-    <div class="row g-3">
+    <div class="grid grid-cols-1 gap-5 md:grid-cols-2 lg:grid-cols-3">
         @foreach (var product in Model.Products)
         {
-            <div class="col-md-4">
-                <div class="card h-100">
-                    <div class="card-body d-flex flex-column">
-                        <h5 class="card-title">@product.Name</h5>
-                        <p class="card-text">@product.Description</p>
-                        <p class="mt-auto mb-3"><strong>@product.Price.ToString("0.00") kr</strong></p>
+            <div class="rounded-3xl border border-violet-500/20 bg-white/5 p-5 shadow-sm backdrop-blur transition hover:-translate-y-0.5 hover:border-violet-400/50 hover:shadow-[0_10px_30px_rgba(139,92,246,0.22)]">
+                <div class="flex h-full flex-col">
+                    <h2 class="text-lg font-semibold text-white">@product.Name</h2>
+                    <p class="mt-2 text-sm text-white/65">@product.Description</p>
+                    <p class="mt-6 text-xl font-bold text-violet-200">@product.Price.ToString("0.00") kr</p>
 
-                        <form method="post" asp-page-handler="AddToCart">
-                            <input type="hidden" name="productId" value="@product.Id" />
-                            <button type="submit" class="btn btn-primary w-100">Add to cart</button>
-                        </form>
-                    </div>
+                    <form method="post" asp-page-handler="AddToCart" class="mt-4">
+                        <input type="hidden" name="productId" value="@product.Id" />
+                        <button type="submit" class="w-full rounded-full bg-gradient-to-r from-violet-600 to-fuchsia-600 px-4 py-2.5 font-semibold text-white transition hover:from-violet-500 hover:to-fuchsia-500">Add to cart</button>
+                    </form>
                 </div>
             </div>
         }

@@ -23,8 +23,8 @@ public class ShopService : IShopService
     public IReadOnlyList<ProductDto> GetProducts()
     {
         return _dbContext.Products
-            .Select(p => new ProductDto(p.Id, p.Name, p.Price, p.Description))
             .OrderBy(p => p.Id)
+            .Select(p => new ProductDto(p.Id, p.Name, p.Price, p.Description))
             .ToList();
     }
 

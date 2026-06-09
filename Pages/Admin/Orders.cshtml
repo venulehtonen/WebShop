@@ -4,44 +4,44 @@
     ViewData["Title"] = "Admin Orders";
 }
 
-<h1 class="mb-3">Admin Orders</h1>
+<h1 class="mb-5 text-3xl font-bold tracking-tight text-white">Admin Orders</h1>
 
 @if (!string.IsNullOrWhiteSpace(Model.StatusMessage))
 {
-    <div class="alert alert-info">@Model.StatusMessage</div>
+    <div class="mb-4 rounded-2xl border border-emerald-500/30 bg-emerald-500/10 px-4 py-3 text-emerald-300">@Model.StatusMessage</div>
 }
 
 @if (Model.Orders.Count == 0)
 {
-    <p>No orders found.</p>
+    <p class="rounded-2xl border border-white/10 bg-white/5 px-4 py-3 text-white/80">No orders found.</p>
 }
 else
 {
     @foreach (var order in Model.Orders)
     {
-        <div class="border rounded p-3 mb-3">
-            <div class="d-flex justify-content-between mb-2">
+        <div class="mb-4 rounded-3xl border border-violet-500/20 bg-white/5 p-5 shadow-sm backdrop-blur">
+            <div class="mb-2 flex items-center justify-between">
                 <strong>Order #@order.Id</strong>
-                <span>@order.CreatedAtUtc.ToLocalTime().ToString("yyyy-MM-dd HH:mm")</span>
+                <span class="text-sm text-white/60">@order.CreatedAtUtc.ToLocalTime().ToString("yyyy-MM-dd HH:mm")</span>
             </div>
             <div class="mb-1">User: <strong>@order.UserId</strong></div>
-            <div class="mb-1">Status: <strong>@order.Status</strong></div>
-            <div class="mb-2">Total: <strong>@order.TotalAmount.ToString("0.00") kr</strong></div>
-            <form method="post" asp-page-handler="UpdateStatus" class="row g-2 align-items-center mb-3">
+            <div class="mb-1">Status: <strong class="text-emerald-300">@order.Status</strong></div>
+            <div class="mb-2">Total: <strong class="text-violet-200">@order.TotalAmount.ToString("0.00") kr</strong></div>
+            <form method="post" asp-page-handler="UpdateStatus" class="mb-3 flex flex-wrap items-center gap-2">
                 <input type="hidden" name="orderId" value="@order.Id" />
-                <div class="col-auto">
-                    <select name="status" class="form-select form-select-sm">
+                <div>
+                    <select name="status" class="rounded-xl border border-white/20 bg-white/5 px-3 py-2 text-sm text-white">
                         <option value="Pending" selected="@(order.Status == "Pending")">Pending</option>
                         <option value="Processing" selected="@(order.Status == "Processing")">Processing</option>
                         <option value="Completed" selected="@(order.Status == "Completed")">Completed</option>
                         <option value="Cancelled" selected="@(order.Status == "Cancelled")">Cancelled</option>
                     </select>
                 </div>
-                <div class="col-auto">
-                    <button type="submit" class="btn btn-sm btn-primary">Update status</button>
+                <div>
+                    <button type="submit" class="rounded-full bg-gradient-to-r from-violet-600 to-fuchsia-600 px-4 py-2 text-sm font-semibold text-white transition hover:from-violet-500 hover:to-fuchsia-500">Update status</button>
                 </div>
             </form>
-            <ul class="mb-0">
+            <ul class="list-disc pl-6">
                 @foreach (var item in order.Items)
                 {
                     <li>@item.ProductName x @item.Quantity - @item.LineTotal.ToString("0.00") kr</li>
