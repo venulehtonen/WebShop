@@ -1,64 +1,89 @@
 # WebShop
 
-## Simple role model (easy to understand)
+WebShop is an e-commerce application I developed using C# and ASP.NET Core as part of my .NET development studies.
 
-The app currently has 3 access levels:
+The project focuses on building a functional online store with user authentication, product management, shopping cart functionality and order handling.
 
-- Guest: not logged in, can view public products.
-- User: logged in user, can use user endpoints (cart).
-- Admin: logged in user with Admin role, can manage products.
+It gave me practical experience in backend development, REST APIs, databases and role-based authorization.
 
-This is intentionally simple and can be extended later with full policy-based authorization.
+## Technologies
 
-Product data is now stored in SQL Server via Entity Framework Core.
+- C#
+- ASP.NET Core
+- Razor Pages
+- Entity Framework Core
+- SQL Server
+- ASP.NET Core Identity
+- REST APIs
 
-## Identity seed for local development
+## Features
 
-On startup, the app creates roles `Admin` and `User` if they do not exist.
-It also seeds one admin account using `AdminSeed` values from appsettings.
-When an authenticated non-admin user makes requests, the app ensures the user gets role `User`.
-If there are no products in database, a few starter products are seeded automatically.
+### Product Management
+- Browse available products
+- View individual product details
+- Create, update and delete products as an administrator
+- Store product information using SQL Server
 
-Default local admin:
+### Authentication and Authorization
+- User authentication with ASP.NET Core Identity
+- Three access levels: Guest, User and Admin
+- Role-based access to protected functionality
+- Automatic role creation during application startup
 
-- Email: `admin@webshop.local`
-- Password: `Admin123!`
+### Shopping Cart
+- Add products to the cart
+- Increase or decrease item quantities
+- Remove products from the cart
 
-## API endpoints
+### Order Management
+- Create and view orders as a user
+- View all orders as an administrator
+- Update order statuses
 
-### Guest
+## API Endpoints
 
-- `GET /api/me`
-- `GET /api/public/products`
-- `GET /api/public/products/{id}`
+### Public
+- GET /api/me
+- GET /api/public/products
+- GET /api/public/products/{id}
 
-### Logged in user
+### User
+- GET /api/user/cart
+- POST /api/user/cart/{productId}
+- POST /api/user/cart/items/{cartItemId}/increase
+- POST /api/user/cart/items/{cartItemId}/decrease
+- DELETE /api/user/cart/items/{cartItemId}
+- POST /api/user/orders
+- GET /api/user/orders
 
-- `GET /api/user/cart`
-- `POST /api/user/cart/{productId}`
-- `POST /api/user/cart/items/{cartItemId}/increase`
-- `POST /api/user/cart/items/{cartItemId}/decrease`
-- `DELETE /api/user/cart/items/{cartItemId}`
-- `POST /api/user/orders`
-- `GET /api/user/orders`
+### Admin
+- POST /api/admin/products
+- PUT /api/admin/products/{id}
+- DELETE /api/admin/products/{id}
+- GET /api/admin/orders
+- PUT /api/admin/orders/{id}/status
 
-### Admin only
+## Database
 
-- `POST /api/admin/products`
-- `PUT /api/admin/products/{id}`
-- `DELETE /api/admin/products/{id}`
-- `GET /api/admin/orders`
-- `PUT /api/admin/orders/{id}/status`
+The application uses SQL Server with Entity Framework Core to manage product data.
 
-## Razor Pages
+Initial product data is automatically generated when the database is empty.
 
-- `/Products/Index` (logged in user can add items to cart)
-- `/User/Orders` (logged in user)
-- `/Admin/Orders` (admin only)
+## Future Improvements
 
-## Future plan
+- Assign the User role during registration
+- Expand database persistence for shopping cart data
+- Implement policy-based authorization
+- Improve the user interface and overall user experience
 
-- Add default `User` role assignment at registration.
-- Move product and cart from in-memory service to database tables.
-- Add order endpoints and admin order management.
-- Add policy-based authorization for finer control.
+## About the Project
+
+I built WebShop to strengthen my knowledge of C# and .NET while gaining hands-on experience developing an application with real-world functionality.
+
+The project helped me better understand how authentication, databases, APIs and frontend components work together.
+
+## Developer
+
+Venujan Nagendirakumar
+
+Full Stack Developer
